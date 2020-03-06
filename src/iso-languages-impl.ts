@@ -10,7 +10,7 @@ const windows_locales = require('windows-locale');
 const iso639_locales = require('iso639-codes');
 const iso639bis_locales = require('langs').all();
 
-import { ISOLanguage } from './iso-languages';
+import { ISOLocale } from './iso-languages';
 
 interface WindowLocale {
     language: string;
@@ -37,16 +37,16 @@ interface ISO639Locale {
     'iso639-2': string;
 }
 
-const all: ISOLanguage[] = [];
+const all: ISOLocale[] = [];
 
-function getLocales(): ISOLanguage[] {
+export function getLocales(): ISOLocale[] {
     if (all.length === 0) {
         const windows_locale_keys = Object.keys(windows_locales);
         const iso639_locale_keys = Object.keys(iso639_locales);
 
         for (let i = 0, l = windows_locale_keys.length; i < l; ++i) {
             const windows_locale: WindowLocale = windows_locales[windows_locale_keys[i]];
-            const locale: ISOLanguage = {
+            const locale: ISOLocale = {
                 name: windows_locale.language,
                 language: windows_locale.language,
                 language_local: windows_locale.language,
@@ -78,30 +78,6 @@ function getLocales(): ISOLanguage[] {
     return all;
 }
 
-export const SUBLANG_NEUTRAL = 0x00;
-export const SUBLANG_DEFAULT = 0x01;
-export const SORT_DEFAULT = 0x00;
-
-export function MAKELANGID(primary: number, sub: number): number {
-    return ((sub << 10) + PRIMARYLANGID(primary));
-}
-
-export function PRIMARYLANGID(langid: number): number {
-    return (langid & 0x3FF);
-}
-
-export function SUBLANGID(langid: number): number {
-    return (langid >> 10);
-}
-
-export function MAKELCID(langid: number, sortid: number): number {
-    return ((sortid << 16) + langid);
-}
-
-export function LANGIDFROMLCID(lcid: number): number {
-    return (lcid & 0x00FF);
-}
-
 function isString(test: any): test is string {
     return typeof test === 'string';
 }
@@ -110,7 +86,7 @@ function isNumber(test: any): test is number {
     return typeof test === 'number';
 }
 
-function find<T>(key: keyof ISOLanguage, data: T): ISOLanguage | null {
+function find<T>(key: keyof ISOLocale, data: T): ISOLocale | null {
     const all = getLocales();
     if (isString(data)) {
         return all.find(e => {
@@ -127,31 +103,31 @@ function find<T>(key: keyof ISOLanguage, data: T): ISOLanguage | null {
     return null;
 }
 
-export function findByName(text: string): ISOLanguage | null {
-    return find('name', text as keyof ISOLanguage);
+export function findByName(text: string): ISOLocale | null {
+    return find('name', text as keyof ISOLocale);
 }
 
-export function findByNameLocal(text: string): ISOLanguage | null {
+export function findByNameLocal(text: string): ISOLocale | null {
     return find('language', text);
 }
 
-export function findByLocation(text: string): ISOLanguage | null {
+export function findByLocation(text: string): ISOLocale | null {
     return find('location', text);
 }
 
-export function findByTag(text: string): ISOLanguage | null {
+export function findByTag(text: string): ISOLocale | null {
     return find('tag', text);
 }
 
-export function findByLCID(id: number): ISOLanguage | null {
+export function findByLCID(id: number): ISOLocale | null {
     return find('lcid', id);
 }
 
-export function getByISO639_2(text: string): ISOLanguage | null {
+export function getByISO639_2(text: string): ISOLocale | null {
     return find('iso639_2', text);
 }
 
-export function getByISO639_1(text: string): ISOLanguage | null {
+export function getByISO639_1(text: string): ISOLocale | null {
     return find('iso639_1', text);
 }
 

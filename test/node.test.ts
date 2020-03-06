@@ -3,9 +3,9 @@ const convert = require('convert-units');
 import { expect } from 'chai';
 import * as os from 'os';
 
-import * as si from '../../lib';
+import * as si from '../lib';
 
-import { PcInfo } from './node-opsconsole';
+import { PcInfo } from './regressions/node-opsconsole';
 
 
 function pourcent_diff(a: number, b: number) {
