@@ -1,1 +1,1 @@
-export * from './iso-languages';
+export * from './index-common';
