@@ -1,0 +1,31 @@
+node_modules/
+build/
+dist/
+lib/
+*.xcodeproj
+*.swp
+*.pyc
+*.VC.db
+*.VC.VC.opendb
+npm-debug.log.*
+Thumbs.db
+# Ignore workspace.xml and tasks.xml files in the .idea folder.
+# https://intellij-support.jetbrains.com/hc/en-us/articles/206544839-How-to-manage-projects-under-Version-Control-Systems
+**/.idea/workspace.xml
+**/.idea/tasks.xml
+.idea
+# package.json
+# Ignore extracted package-properties.txt
+package-properties.txt
+.vs/
+*.vcxproj
+*.vcxproj.user
+*.vcxproj.filters
+*.sln
+*.code-workspace
+*.swo
+package-lock.json
+.DS_Store
+*.todelete.*
+*.key
+*.tgz

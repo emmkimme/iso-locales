@@ -1,0 +1,44 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        /* Basic Options */
+        "module": "commonjs",
+        "target": "es6",
+        "lib": [
+            "dom",
+            "esnext",
+            "esnext.asynciterable"
+        ],
+
+        /* Module Resolution Options */
+        "moduleResolution": "node",
+
+        "incremental": true,
+
+        "preserveConstEnums": true,
+        "stripInternal": true,
+        "removeComments": true,
+
+        /* Source Map Options */
+        "sourceMap": true,
+
+        /* Strict Type-Checking Options */
+        /* "strict" covers "alwaysStrict", "noImplicitAny", "noImplicitThis", "strictNullChecks",... */
+        "strict": true,
+        "strictNullChecks": false,
+
+        /* Additional Checks */
+        "noUnusedLocals" : true,
+        "noUnusedParameters" : false,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch" : true,
+        "forceConsistentCasingInFileNames": true,
+
+        /* Experimental Options */
+        "experimentalDecorators": true,
+
+        /* Treat a symlinked file like a real one. */
+        "preserveSymlinks": true
+    }
+}
+

@@ -1,0 +1,17 @@
+{
+    "include": [
+        "./**/*.ts"
+    ],
+    "extends": "../tsconfig.common.json",
+    // Force baseUrl - see https://github.com/Microsoft/TypeScript/issues/17617
+    "compilerOptions": {
+        // Needed for project references.
+        "composite": true,
+        "declaration": true,
+
+        "baseUrl": ".",
+        "outDir": "../lib",
+        // "rootDir": ".."
+    }
+}
+

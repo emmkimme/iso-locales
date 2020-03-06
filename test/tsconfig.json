@@ -1,0 +1,15 @@
+{
+    "include": [
+        "./**/*.ts"
+    ],
+    "extends": "../tsconfig.common.json",
+    "references": [
+        { "path": "../src" }
+    ],
+    // Force baseUrl - see https://github.com/Microsoft/TypeScript/issues/17617
+    "compilerOptions": {
+        "baseUrl": ".",
+        "outDir": "../build"
+    }
+}
+

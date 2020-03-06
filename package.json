@@ -1,0 +1,88 @@
+{
+  "name": "iso-languages",
+  "version": "0.0.1",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emmkimme/iso-languages.git"
+  },
+  "keywords": [
+    "rfc4646",
+    "ISO639",
+    "ISO3166",
+    "locale",
+    "language",
+    "i18n",
+    "LCID",
+    "LANGID"
+  ],
+  "author": "Emmanuel Kimmerlin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/emmkimme/iso-languages/issues"
+  },
+  "homepage": "https://github.com/emmkimme/iso-languages#readme",
+  "maintainers": [
+    {
+      "name": "Emmanuel Kimmerlin",
+      "email": "emmanuel.kimmerlin@refinitiv.com"
+    }
+  ],
+  "main": "./lib/index.js",
+  "browser": "./lib/index-browser.js",
+  "types": "./lib/index.d.ts",
+  "dependencies": {
+    "iso639-codes": "^1.0.1",
+    "langs": "^2.0.0",
+    "windows-locale": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/chai": "~4.2.9",
+    "@types/mocha": "^7.0.1",
+    "@types/node": "^12.7.12",
+    "@types/rewire": "^2.5.28",
+    "@types/sinon": "^7.5.2",
+    "chai": "4.2.0",
+    "convert-units": "^2.3.4",
+    "copyfiles": "^2.2.0",
+    "del": "^5.1.0",
+    "del-cli": "^3.0.0",
+    "dts-bundle": "^0.7.3",
+    "mocha": "^7.1.0",
+    "mochawesome": "^5.0.0",
+    "ncp": "^2.0.0",
+    "npm-run-all": "^4.1.5",
+    "rewire": "^4.0.1",
+    "should": "^13.2.3",
+    "sinon": "^9.0.0",
+    "source-map-support": "^0.5.16",
+    "tslint": "^6.0.0",
+    "typescript": "3.8.2"
+  },
+  "scripts": {
+    "clean": "run-p clean:*",
+    "clean:build": "del-cli ./lib ./build ./dist",
+    "clean:test": "",
+    "build-ts": "run-s build-ts:src build-ts:test",
+    "build-ts:src": "run-p ts:src tslint:src",
+    "build-ts:test": "run-p ts:test tslint:test",
+    "build": "run-s build:src build:test build-declaration",
+    "build:src": "npm run build-ts:src",
+    "build:test": "npm run build-ts:test",
+    "build-declaration": "run-s build-declaration:*",
+    "build-declaration:dts-bundle": "dts-bundle --outputAsModuleFolder --name index --main ./lib/index.d.ts",
+    "build-declaration:dts-bundle-browser": "dts-bundle --outputAsModuleFolder --name index-browser --main ./lib/index-browser.d.ts",
+    "build-declaration:clean-up": "del-cli ./lib/sysinfo/**/*.d.ts",
+    "test": "run-s test:*",
+    "test:electron": "electron-mocha --no-timeouts --reporter spec build/**/*.test.js",
+    "test:node": "mocha --no-timeouts --reporter spec build/**/node.test.js",
+    "test:systemtest": "node build/systemtest",
+    "ts": "run-s ts:src ts:test",
+    "ts:src": "tsc -p src",
+    "ts:test": "tsc -p test",
+    "tslint": "run-p tslint:*",
+    "tslint:src": "tslint -p tslint.json --outputAbsolutePaths src/**/*.ts -e src/**/*.d.ts",
+    "tslint:test": "tslint -p tslint.json --outputAbsolutePaths test/**/*.ts -e test/**/*.d.ts",
+    "publication": "npm publish ./ --registry https://registry.npmjs.org"
+  }
+}

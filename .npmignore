@@ -1,0 +1,28 @@
+# ignore typescript configuration files
+**/tsconfig.*
+# ignore typescript files
+**/*.ts
+**/*.tsx
+# include typescript definition files
+!**/*.d.ts
+# ignore typings configuration file
+typings.json
+# ignore typings folder
+typings/
+# ignore tests
+**/node_modules/
+build/
+src/
+doc/
+test/
+assetinfo.json
+*.tgz
+debug.log
+gulpfile.js
+**/tsconfig*.*
+tslint.json
+webpack.*
+**/.vscode
+*.code-workspace
+.npmignore
+.gitignore

@@ -1,0 +1,98 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Publication",
+            "program": "${workspaceFolder}/bams-publish.js",
+            "skipFiles": [
+            ]
+        },
+        {
+            "name": "Launch System test",
+            "type": "node",
+            "request": "launch",
+            "protocol": "inspector",
+            // "port": 5828,
+            // "program": "${workspaceRoot}/src/products/eikon-on-electron/build/index.js",
+            "stopOnEntry": false,
+            "args": [],
+            "cwd": "${workspaceRoot}/build/systemtest/",
+            "preLaunchTask": null,
+            "windows": {
+                "runtimeExecutable": "${workspaceRoot}/node_modules/electron/dist/electron.exe"
+            },
+            "osx": {
+                "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron"
+            },
+            "linux": {
+                "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron"
+            },
+            "outputCapture": "std",
+            "runtimeArgs": [
+                "${workspaceRoot}/build/systemtest/",
+                "--disable-sandbox",
+                "--remote-debugging-port=8315"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Run Electron-Mocha Tests",
+            "program": "${workspaceRoot}/node_modules/electron-mocha/bin/electron-mocha",
+            "port": 5858,
+            "protocol": "inspector",
+            "args": [
+                "--remote-debugging-port=8315",
+                // specify one or more test locations to run
+                // "${workspaceRoot}/build/**/*.test.js",
+                // "${workspaceRoot}/build/**/electron.test.js",
+                "${workspaceRoot}/build/**/node.test.js",
+                "--full-trace",
+                "--bail",
+                "--recursive",
+                "--require",
+                "${workspaceRoot}/test/require.js",
+                "--reporter",
+                "spec",
+                "--no-timeouts",
+                "--colors",
+                // "--debug",
+                "--inspect-brk=5858"
+                // "--debug-brk"
+            ],
+            "cwd": "${workspaceRoot}",
+            "env": {
+                "NODE_ENV": "development"
+            },
+            "windows": {
+                "env": {
+                    "ELECTRON_PATH": "${workspaceRoot}/node_modules/.bin/electron.cmd",
+                    "NODE_ENV": "development"
+                }
+            },
+            "osx": {
+                "env": {
+                    "ELECTRON_PATH": "${workspaceRoot}/node_modules/.bin/electron"
+                }
+            },
+            "linux": {
+                "env": {
+                    "ELECTRON_PATH": "${workspaceRoot}/node_modules/.bin/electron"
+                }
+            },
+            "outputCapture": "std",
+            "console": "internalConsole",
+            // "internalConsoleOptions": "openOnSessionStart",
+            "sourceMaps": true,
+            "outFiles": [
+                "!${workspaceRoot}/**/node_modules/**/*.js"
+            ],
+            "trace": false
+        }
+    ]
+}
