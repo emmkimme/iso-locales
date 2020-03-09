@@ -23,11 +23,11 @@ export function SUBLANGID(langid: number): number {
 }
 
 export function MAKELCID(langid: number, sortid: number): number {
-    return (((sortid & 0x0F) << 16) + (langid & 0xFF));
+    return (((sortid & 0x0F) << 16) + (langid & 0xFFFF));
 }
 
 export function LANGIDFROMLCID(lcid: number): number {
-    return (lcid & 0x00FF);
+    return (lcid & 0xFFFF);
 }
 
 export function SORTIDFROMLCID(lcid: number): number {
