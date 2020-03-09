@@ -35,8 +35,11 @@
   "browser": "./lib/index-browser.js",
   "types": "./lib/index.d.ts",
   "dependencies": {
+    "bcp-47": "^1.0.7",
     "countries-code": "^1.0.8",
+    "iso-15924": "^2.3.0",
     "langs": "^2.0.0",
+    "un-m49": "^1.0.0",
     "windows-locale": "^1.0.1"
   },
   "devDependencies": {

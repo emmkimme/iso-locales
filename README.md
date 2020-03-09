@@ -14,29 +14,57 @@ npm install iso-locales
 * https://github.com/nirvana-flame/countries-code
 * https://github.com/adlawson/langs.js
 * https://github.com/TiagoDanin/Windows-Locale
+* https://github.com/wooorm/un-m49
+* https://github.com/wooorm/iso-15924
 * http://nodejs.org/
+
+# bcp-47 / RFC4646
+* Ref: https://tools.ietf.org/html/bcp47, https://tools.ietf.org/html/rfc4646
+* Dependency: https://github.com/wooorm/bcp-47
+
+```
+ langtag       = language
+                 ["-" script]
+                 ["-" region]
+                 *("-" variant)
+                 *("-" extension)
+                 ["-" privateuse]
+```
+
+# ISO639 (Language)
+* Ref: https://en.wikipedia.org/wiki/ISO_639
+* Dependency: https://github.com/adlawson/langs.js
+* Lists: https://fr.wikipedia.org/wiki/Liste_des_codes_ISO_639-1, https://www.loc.gov/standards/iso639-2/php/code_list.php
+
+# ISO15924 (Script)
+* Ref: https://en.wikipedia.org/wiki/ISO_15924
+* Dependency: https://github.com/wooorm/iso-15924
+* Lists: https://unicode.org/iso15924/iso15924-codes.html
+
+# ISO3166 (Region/Country)
+* Wikipedia: https://en.wikipedia.org/wiki/ISO_3166
+* Dependency: https://github.com/nirvana-flame/countries-code
+* Lists: https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
+
+# UN M49 (Region/Country)
+* Ref: https://unstats.un.org/unsd/methodology/m49/, https://en.wikipedia.org/wiki/UN_M49
+* Dependency: https://github.com/wooorm/un-m49
+
 
 # ISO Locale
 This library manages a collection of ISOLocale/s built from 3 differents sources (see dependencies)
 ```ts
 export interface ISOLocale {
     name: string;
-    language: string;
-    language_local: string;
-    region?: string;
-    tag: string;               // RFC 4646 =  lowercase(ISO639 shortest code)[-uppercase(ISO3166.1-alpha2)]
+    tag: string;
+    bcp47?: BCP47Data;
     lcid: number;
-    iso639?: {
-        '1-alpha2': string,    // ISO639.1 alpha-2
-        '2-alpha3': string,    // ISO639.2 alpha-3
-        '2T-alpha3': string,   // ISO639.2 alpha-3 Terminology
-        '2B-alpha3': string,   // ISO639.2 alpha-3 Bibliographic
-    };
-    iso3166?: {
-        '1-alpha2': string;    // ISO3166.1 alpha-2
-        '1-alpha3': string;    // ISO3166.1 alpha-3
-        '1-num3': number;      // ISO3166.1 numeric-3 M49
-    };
+    language: string;
+    iso639?: ISO639Data;
+    region?: string; 
+    iso3166?: ISO3166Data;
+    script?: string;
+    iso15924?: ISO15924Data;
 }
 
 // return all locales
@@ -53,22 +81,6 @@ function findByTag(text: string): ISOLocale | null;
 function findByLCID(id: number): ISOLocale | null;
 ...
 ```
-
-# Tag (RFC4646)
-
-```
-<ISO-639>[-<ISO-15924>][-<ISO-3166>]
-```
-
-```ts
-export interface TagParts {
-    language: string;   // [ISO-639] language code
-    script?: string;    // [ISO-15924] script tag
-    region?: string;    // [ISO-3166] country/region
-}
-
-function parse(tag: string): TagParts;
-``` 
 
 # LCID (RFC5646)
 

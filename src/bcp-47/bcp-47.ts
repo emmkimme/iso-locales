@@ -1,4 +1,5 @@
 // https://tools.ietf.org/html/rfc4646
+// https://tools.ietf.org/html/bcp47
 
 // The syntax of the language tag in ABNF [RFC4234] is:
 
@@ -41,29 +42,14 @@
 //                    ; that starts a grandfathered tag
 
 //    alphanum      = (ALPHA / DIGIT)       ; letters and numbers
-
-export interface TagParts {
-    language: string;   // [ISO-639] language code
-    script?: string;    // [ISO-15924] script tag
-    region?: string;    // [ISO-3166] country/region
-}
-
-export function parse(tag: string): TagParts {
-    const parts = tag.split('-');
-    const language = parts[0];
-    const tagParts: TagParts = {
-        language
-    };
-    if (parts.length > 1) {
-        if (parts[1].length === 4) {
-            tagParts.script = parts[1];
-            if (parts.length > 2) {
-                tagParts.region = parts[parts.length - 1];
-            }
-        }
-        else {
-            tagParts.region = parts[parts.length - 1];
-        }
-    }
-    return tagParts;
+export interface BCP47Data {
+    language: string;
+    extendedLanguageSubtags?: string[];
+    script?: string;
+    region?: string;
+    variants?: string[];
+    extensions?: object[];
+    privateuse?: string[];
+    irregular?: string;
+    regular?: string;
 }
