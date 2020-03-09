@@ -1,6 +1,6 @@
 {
   "name": "iso-languages",
-  "version": "0.0.1-alpha",
+  "version": "0.0.1",
   "description": "",
   "repository": {
     "type": "git",
@@ -13,6 +13,10 @@
     "ISO 639",
     "ISO3166",
     "ISO 3166",
+    "BCP47",
+    "BC P47",
+    "ISO15924",
+    "ISO 15924",
     "locale",
     "language",
     "i18n",
@@ -43,9 +47,9 @@
     "windows-locale": "^1.0.1"
   },
   "devDependencies": {
-    "@types/chai": "~4.2.9",
-    "@types/mocha": "^7.0.1",
-    "@types/node": "^12.7.12",
+    "@types/chai": "~4.2.10",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.9.0",
     "@types/rewire": "^2.5.28",
     "@types/sinon": "^7.5.2",
     "chai": "4.2.0",
@@ -59,7 +63,7 @@
     "sinon": "^9.0.0",
     "source-map-support": "^0.5.16",
     "tslint": "^6.0.0",
-    "typescript": "3.8.2"
+    "typescript": "3.8.3"
   },
   "scripts": {
     "clean": "run-p clean:*",

@@ -1,88 +1,59 @@
 # iso-languages
-Helpers for manipuling ISO locales
-- RFC4646
-- ISO639.1
-- ISO639.2
-- ISO3166.1
+Helpers for manipuling RFC4646 locales.
+Purpose is to have for each locale, the ISO639, ISO3166, ISO15924 and m49 references associated.
 
 # Installation
 ```Batchfile
 npm install iso-locales
 ```
 
-# Dependencies
-* https://github.com/nirvana-flame/countries-code
-* https://github.com/adlawson/langs.js
-* https://github.com/TiagoDanin/Windows-Locale
-* https://github.com/wooorm/un-m49
-* https://github.com/wooorm/iso-15924
-* http://nodejs.org/
-
-# bcp-47 / RFC4646
-* Ref: https://tools.ietf.org/html/bcp47, https://tools.ietf.org/html/rfc4646
-* Dependency: https://github.com/wooorm/bcp-47
-
-```
- langtag       = language
-                 ["-" script]
-                 ["-" region]
-                 *("-" variant)
-                 *("-" extension)
-                 ["-" privateuse]
-```
-
-# ISO639 (Language)
-* Ref: https://en.wikipedia.org/wiki/ISO_639
-* Dependency: https://github.com/adlawson/langs.js
-* Lists: https://fr.wikipedia.org/wiki/Liste_des_codes_ISO_639-1, https://www.loc.gov/standards/iso639-2/php/code_list.php
-
-# ISO15924 (Script)
-* Ref: https://en.wikipedia.org/wiki/ISO_15924
-* Dependency: https://github.com/wooorm/iso-15924
-* Lists: https://unicode.org/iso15924/iso15924-codes.html
-
-# ISO3166 (Region/Country)
-* Wikipedia: https://en.wikipedia.org/wiki/ISO_3166
-* Dependency: https://github.com/nirvana-flame/countries-code
-* Lists: https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
-
-# UN M49 (Region/Country)
-* Ref: https://unstats.un.org/unsd/methodology/m49/, https://en.wikipedia.org/wiki/UN_M49
-* Dependency: https://github.com/wooorm/un-m49
-
-
 # ISO Locale
-This library manages a collection of ISOLocale/s built from 3 differents sources (see dependencies)
+This library manages a collection of ISOLocale/s, completed with differents sources (see dependencies below).
+The main index is coming from:
+https://github.com/TiagoDanin/Windows-Locale
+
+
 ```ts
-export interface ISOLocale {
-    name: string;
+interface ISOLocale {
     tag: string;
-    bcp47?: BCP47Data;
+    tag_bcp47?: BCP47Data;
+
     lcid: number;
-    language: string;
-    iso639?: ISO639Data;
-    region?: string; 
-    iso3166?: ISO3166Data;
+    lcid_parts: LCIDParts;
+
+    language: string;           // UI Friendly name (EN)
+    language_local?: string;    // UI Native name
+    language_iso639?: ISO639Data;
+
+    region?: string;            // UI Friendly name (EN)
+    region_iso3166?: ISO3166Data;
+
     script?: string;
-    iso15924?: ISO15924Data;
+    script_iso15924?: ISO15924Data;
 }
 
 // return all locales
 function getLocales(): ISOLocale[];
 ```
 
-You can look at a locale using any kind of these fields as parameter.
+You can search for a locale:
 
 ```ts
-function findByName(text: string): ISOLocale | null;
-function findByNameLocal(text: string): ISOLocale | null;
+function findByLanguage(text: string): ISOLocale | null;
+function findByLanguageLocal(text: string): ISOLocale | null;
 function findByRegion(text: string): ISOLocale | null;
 function findByTag(text: string): ISOLocale | null;
 function findByLCID(id: number): ISOLocale | null;
 ...
 ```
 
+# RFC4646
+* Ref: https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-lcid/70feba9f-294e-491e-b6eb-56532684c37f?redirectedfrom=MSDN
+
+
 # LCID (RFC5646)
+* Ref: https://docs.microsoft.com/en-us/windows/win32/intl/locale-identifiers
+* Ref: https://docs.microsoft.com/en-us/windows/win32/intl/language-identifier-constants-and-strings
 
 A language ID is a 16 bit value which is the combination of a
 primary language ID and a secondary language ID.
@@ -105,18 +76,115 @@ The bits are allocated as follows:
 ```
 
 ```ts
-export interface LCIDParts {
+interface LCIDParts {
     language: number;
     primary: number;
     sub: number;
     sort: number;
 }
 
+const SUBLANG_NEUTRAL = 0x00;
+const SUBLANG_DEFAULT = 0x01;
+const SORT_DEFAULT = 0x00;
+
 function parse(lcid: number): LCIDParts;
 ```
 
+# bcp-47 / RFC4646
+* Ref: https://tools.ietf.org/html/bcp47, https://tools.ietf.org/html/rfc4646
+* Dependency: https://github.com/wooorm/bcp-47
 
+```
+ langtag       = language
+                 ["-" script]
+                 ["-" region]
+                 *("-" variant)
+                 *("-" extension)
+                 ["-" privateuse]
+```
 
+# ISO639 (Language)
+* Ref: https://en.wikipedia.org/wiki/ISO_639
+* Dependency: https://github.com/adlawson/langs.js
+* Lists: https://fr.wikipedia.org/wiki/Liste_des_codes_ISO_639-1, https://www.loc.gov/standards/iso639-2/php/code_list.php
+
+```ts
+interface ISO639Data {
+    name: string;
+    name_local: string;
+    '1-alpha2': string;    // ISO639.1 alpha-2
+    '2-alpha3': string;    // ISO639.2 alpha-3
+    '2T-alpha3'?: string;   // ISO639.2 alpha-3 Terminology
+    '2B-alpha3'?: string;   // ISO639.2 alpha-3 Bibliographic
+    '3-alpha3': string;    // ISO639.3 alpha-3 (OBSOLETE)
+}
+
+function getList(): ISO639Data[];
+function find(text: string): ISO639Data | null;
+
+```
+
+# ISO15924 (Script)
+* Ref: https://en.wikipedia.org/wiki/ISO_15924
+* Dependency: https://github.com/wooorm/iso-15924
+* Lists: https://unicode.org/iso15924/iso15924-codes.html
+
+```ts
+interface ISO15924Data {
+    name: string;       // Script name
+    code: string;       // alpha4 ISO 15924 code
+    numeric: string;    // num3 ISO 15924 code
+    pva: string;        // Property Value Alias
+    date: string;       // Date of addition
+}
+
+function getList(): ISO15924Data[];
+function find(text: string): ISO15924Data | null;
+
+```
+
+# ISO3166 (Region/Country)
+* Wikipedia: https://en.wikipedia.org/wiki/ISO_3166
+* Dependency: https://github.com/nirvana-flame/countries-code
+* Lists: https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
+
+```ts
+interface ISO3166Data {
+    name_en: string;
+    '1-alpha2': string;    // ISO3166.1 alpha-2
+    '1-alpha3': string;    // ISO3166.1 alpha-3
+    '1-num3': number;      // ISO3166.1 numeric-3 M49
+    '1-num3-m49'?: UNM49Data;
+}
+
+function getList(): ISO3166Data[];
+function find(text: string): ISO3166Data | null;
+
+```
+
+# UN M49 (Region/Country)
+* Ref: https://unstats.un.org/unsd/methodology/m49/, https://en.wikipedia.org/wiki/UN_M49
+* Dependency: https://github.com/wooorm/un-m49
+
+```ts
+enum UNM49Type {
+    Global = 0,     // (example: 001 World)
+    Region = 1,     //  (example: 002 Africa)
+    Subregion = 2,  //  (example: 202 Sub-Saharan Africa)
+    Intermediate = 3, //  region (example: 017 Middle Africa)
+    Country = 4,    //  or area (example: 024 Angola)
+}
+
+interface UNM49Data {
+    type: UNM49Type;    // Script name
+    code: string;       // num3 ISO 15924 code
+    parent?: string;    // Property Value Alias
+}
+
+function getList(): ISO3166Data[];
+function find(text: string): ISO3166Data | null;
+
+```
 
 # MIT License
 

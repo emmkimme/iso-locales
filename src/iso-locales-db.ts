@@ -6,17 +6,13 @@
 // an ISO 3166 two-letter uppercase subculture code associated with a country or region.
 const windows_locales = require('windows-locale');
 
-// https://fr.wikipedia.org/wiki/Liste_des_codes_ISO_639-1
+import { ISOLocale } from './iso-locales';
+
 import * as iso639 from './iso-639';
 import * as iso3166 from './iso-3166';
 import * as iso15924 from './iso-15924';
 import * as bcp47 from './bcp-47';
 import * as lcid from './lcid';
-
-import { ISOLocale } from './iso-locales';
-import { BCP47Data } from 'bcp-47/bcp-47';
-
-// import * as rfc4646_tag from './tag';
 
 interface WindowLocale {
     language: string;
@@ -32,11 +28,11 @@ const all: ISOLocale[] = [];
 
 export function getLocales(): ISOLocale[] {
     if (all.length === 0) {
+        trace && console.time('ISOLocale db');
         const windows_locale_keys = Object.keys(windows_locales);
         for (let i = 0, l = windows_locale_keys.length; i < l; ++i) {
             const windows_locale: WindowLocale = windows_locales[windows_locale_keys[i]];
             const locale: ISOLocale = {
-                name: windows_locale.language,
                 language: windows_locale.language,
                 // language_local: windows_locale.language,
                 region: windows_locale.location,
@@ -44,13 +40,15 @@ export function getLocales(): ISOLocale[] {
                 lcid: windows_locale.id,
                 lcid_parts: lcid.parse(windows_locale.id)
             };
-            const bcp47Data = bcp47.parse(locale.tag, { forgiving: true }) as BCP47Data;
+            const bcp47Data = bcp47.parse(locale.tag, { forgiving: true }) as bcp47.BCP47Data;
+            locale.tag_bcp47 = bcp47Data;
 
             // Complete with ISO639 info
             const iso639data = iso639.find(bcp47Data.language);
             if (iso639data) {
                 // locale.language_local = iso639data.name_local;
                 locale.language_iso639 = iso639data;
+                locale.language_local = iso639data.name_local;
             }
             else {
                 trace && console.error(`${locale.tag} (${bcp47Data.language}) - no ISO639 entry !!`);
@@ -83,6 +81,7 @@ export function getLocales(): ISOLocale[] {
             }
             all.push(locale);
         }
+        trace && console.timeEnd('ISOLocale db');
     }
     return all;
 }

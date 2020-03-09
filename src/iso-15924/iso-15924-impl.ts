@@ -9,6 +9,7 @@ const fields = ['code'];
 
 function build() {
     if (all == null) {
+        trace && console.time('ISO15924 db');
         all_index = {};
         all = require('iso-15924');
         for (let i = 0, l = all.length; i < l ; ++i) {
@@ -21,8 +22,9 @@ function build() {
             //     'num3': Number(depData.numeric)
             // };
             for (let i = 0; i < fields.length; ++i) {
-                const value = (isoData as any)[fields[i]].toLowerCase();
-                if (value) {
+                const field = (isoData as any)[fields[i]];
+                if (field) {
+                    const value = field.toLowerCase();
                     if (trace) {
                         const previous_entry = all_index[value];
                         if (previous_entry && (isoData !== previous_entry)) {
@@ -35,11 +37,11 @@ function build() {
             // return isoData;
         // });
         }
+        trace && console.timeEnd('ISO15924 db');
     }
-
 }
 
-export function getCollection(): ISO15924Data[] {
+export function getList(): ISO15924Data[] {
     build();
     return all;
 }

@@ -40,7 +40,7 @@
             "protocol": "inspector",
             "args": [
                 // "${workspaceRoot}/build/**/*.test.js",
-                "${workspaceRoot}/build/**/node.test.js",
+                "${workspaceRoot}/build/**/consistency.test.js",
                 "--full-trace",
                 "--bail",
                 "--recursive",

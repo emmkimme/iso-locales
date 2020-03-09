@@ -10,6 +10,7 @@ const fields = ['code'];
 
 function build() {
     if (all == null) {
+        trace && console.time('M49 db');
         all_index = {};
         all = require('un-m49');
         for (let i = 0, l = all.length; i < l ; ++i) {
@@ -22,8 +23,9 @@ function build() {
             //     'num3': Number(depData.numeric)
             // };
             for (let i = 0; i < fields.length; ++i) {
-                const value = (isoData as any)[fields[i]];
-                if (value) {
+                const field = (isoData as any)[fields[i]];
+                if (field) {
+                    const value = field.toLowerCase();
                     if (trace) {
                         const previous_entry = all_index[value];
                         if (previous_entry && (isoData !== previous_entry)) {
@@ -36,11 +38,11 @@ function build() {
             // return isoData;
         // });
         }
+        trace && console.timeEnd('M49 db');
     }
-
 }
 
-export function getCollection(): UNM49Data[] {
+export function getList(): UNM49Data[] {
     build();
     return all;
 }

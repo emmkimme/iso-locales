@@ -19,6 +19,7 @@ const fields = ['1-alpha2', '2-alpha3', '2T-alpha3', '2B-alpha3', '3-alpha3'];
 
 function build() {
     if (all == null) {
+        trace && console.time('ISO639 db');
         all_index = {};
         const dep: ISO639DepData[] = require('langs').all();
         all = dep.map((depData) => {
@@ -33,24 +34,27 @@ function build() {
             };
 
             for (let i = 0; i < fields.length; ++i) {
-                const value = (isoData as any)[fields[i]].toLowerCase();
-                if (value) {
-                    if (trace) {
-                        const previous_entry = all_index[value];
-                        if (previous_entry && (isoData !== previous_entry)) {
-                            console.error(`ISO639 ${isoData} conflicts with ${previous_entry}`);
+                const field = (isoData as any)[fields[i]];
+                if (field) {
+                    const value = field.toLowerCase();
+                    if (value) {
+                        if (trace) {
+                            const previous_entry = all_index[value];
+                            if (previous_entry && (isoData !== previous_entry)) {
+                                console.error(`ISO639 ${isoData} conflicts with ${previous_entry}`);
+                            }
                         }
+                        all_index[value] = isoData;
                     }
-                    all_index[value] = isoData;
                 }
             }
             return isoData;
         });
+        trace && console.timeEnd('ISO639 db');
     }
-
 }
 
-export function getCollection(): ISO639Data[] {
+export function getList(): ISO639Data[] {
     build();
     return all;
 }

@@ -26,17 +26,13 @@ function find<T>(key: keyof ISOLocale, data: T): ISOLocale | null {
     return null;
 }
 
-export function findByName(text: string): ISOLocale | null {
-    return find('name', text as keyof ISOLocale);
-}
-
 export function findByLanguage(text: string): ISOLocale | null {
     return find('language', text);
 }
 
-// export function findByLanguageLocal(text: string): ISOLocale | null {
-//     return find('language_local', text);
-// }
+export function findByLanguageLocal(text: string): ISOLocale | null {
+    return find('language_local', text);
+}
 
 export function findByRegion(text: string): ISOLocale | null {
     return find('region', text);

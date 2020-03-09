@@ -15,10 +15,11 @@ const trace = true;
 let all: ISO3166Data[];
 let all_index: any;
 
-const fields = ['1-alpha2', '1-alpha3', '1-num3'];
+const fields = ['1-alpha2', '1-alpha3'];
 
 function build() {
     if (all == null) {
+        trace && console.time('ISO3166 db');
         all_index = {};
         const dep: ISO3166DepData[] = require('countries-code').allCountriesList();
         all = dep.map((depData) => {
@@ -33,24 +34,27 @@ function build() {
                 isoData['1-num3-m49'] = m49data;
             }
             for (let i = 0; i < fields.length; ++i) {
-                const value = (isoData as any)[fields[i]].toLowerCase();
-                if (value) {
-                    if (trace) {
-                        const previous_entry = all_index[value];
-                        if (previous_entry && (isoData !== previous_entry)) {
-                            console.error(`ISO3166 ${isoData} conflicts with ${previous_entry}`);
+                const field = (isoData as any)[fields[i]];
+                if (field) {
+                    const value = field.toLowerCase();
+                    if (value) {
+                        if (trace) {
+                            const previous_entry = all_index[value];
+                            if (previous_entry && (isoData !== previous_entry)) {
+                                console.error(`ISO3166 ${isoData} conflicts with ${previous_entry}`);
+                            }
                         }
+                        all_index[value] = isoData;
                     }
-                    all_index[value] = isoData;
                 }
             }
             return isoData;
         });
+        trace && console.timeEnd('ISO3166 db');
     }
-
 }
 
-export function getCollection(): ISO3166Data[] {
+export function getList(): ISO3166Data[] {
     build();
     return all;
 }
