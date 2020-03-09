@@ -1,7 +1,7 @@
 import { UNM49Data } from './m49';
 export { UNM49Data };
 
-const trace = true;
+const trace = false;
 
 let all: UNM49Data[];
 let all_index: any;
@@ -29,7 +29,7 @@ function build() {
                     if (trace) {
                         const previous_entry = all_index[value];
                         if (previous_entry && (isoData !== previous_entry)) {
-                            console.error(`M49 ${isoData} conflicts with ${previous_entry}`);
+                            trace && console.error(`M49 ${isoData} conflicts with ${previous_entry}`);
                         }
                     }
                     all_index[value] = isoData;

@@ -1,6 +1,6 @@
 import { ISO15924Data } from './iso-15924';
 
-const trace = true;
+const trace = false;
 
 let all: ISO15924Data[];
 let all_index: any;
@@ -28,7 +28,7 @@ function build() {
                     if (trace) {
                         const previous_entry = all_index[value];
                         if (previous_entry && (isoData !== previous_entry)) {
-                            console.error(`ISO15924 ${isoData} conflicts with ${previous_entry}`);
+                            trace && console.error(`ISO15924 ${isoData} conflicts with ${previous_entry}`);
                         }
                     }
                     all_index[value] = isoData;

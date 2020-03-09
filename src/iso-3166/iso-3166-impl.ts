@@ -10,7 +10,7 @@ interface ISO3166DepData {
     number: string;
 }
 
-const trace = true;
+const trace = false;
 
 let all: ISO3166Data[];
 let all_index: any;
@@ -41,7 +41,7 @@ function build() {
                         if (trace) {
                             const previous_entry = all_index[value];
                             if (previous_entry && (isoData !== previous_entry)) {
-                                console.error(`ISO3166 ${isoData} conflicts with ${previous_entry}`);
+                                trace && console.error(`ISO3166 ${isoData} conflicts with ${previous_entry}`);
                             }
                         }
                         all_index[value] = isoData;

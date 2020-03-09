@@ -22,7 +22,7 @@ interface WindowLocale {
     version: string;
 }
 
-const trace = true;
+const trace = false;
 
 const all: ISOLocale[] = [];
 

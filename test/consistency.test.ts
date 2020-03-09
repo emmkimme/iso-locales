@@ -15,7 +15,7 @@ describe('check consistency', () => {
         const all_locales = iso_locales.getLocales();
         for (let i = 0, l = all_locales.length; i < l; ++i) {
             const locale = all_locales[i];
-            console.log(locale);
+            // console.log(locale);
             const bcp47 = iso_locales.bcp47.parse(locale.tag, { forgiving: true });
             expect(locale.tag_bcp47.language === bcp47.language);
             expect(locale.tag_bcp47.script === bcp47.script);

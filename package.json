@@ -1,7 +1,7 @@
 {
   "name": "iso-locales",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.0.2",
+  "description": "Helpers for manipuling ISO/RFC locales.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/emmkimme/iso-languages.git"
