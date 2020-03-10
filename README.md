@@ -1,6 +1,6 @@
-# iso-languages
-Helpers for manipuling RFC4646 locales.
-Purpose is to have for each locale, the ISO639, ISO3166, ISO15924 and m49 references associated.
+# iso-locales
+Helpers for manipuling RFC 4646 locales.
+Purpose is to have for each locale, the ISO 639, ISO 3166, ISO 15924 and M49 associated.
 
 # Installation
 ```Batchfile
@@ -47,11 +47,7 @@ function findByLCID(id: number): ISOLocale | null;
 ...
 ```
 
-# RFC4646
-* Ref: https://tools.ietf.org/html/rfc4646
-
-
-# LCID (RFC5646 / RFC4646)
+# LCID (RFC 5646)
 * Ref: https://docs.microsoft.com/en-us/windows/win32/intl/locale-identifiers
 * Ref: https://docs.microsoft.com/en-us/windows/win32/intl/language-identifier-constants-and-strings
 * Dependency: https://github.com/TiagoDanin/Windows-Locale
@@ -91,13 +87,13 @@ const SORT_DEFAULT = 0x00;
 
 function parse(lcid: number): LCIDParts;
 
-function format(lcidParts: LCIDParts): number;
+function format(parts: LCIDParts): number;
 function format(language: number, sort: number): number;
 function format(primary: number, sub: number, sort: number): number;
 ```
 
-# BCP-47
-* Ref: https://tools.ietf.org/html/bcp47
+# BCP-47 / RFC 4646
+* Ref: https://tools.ietf.org/html/bcp47, https://tools.ietf.org/html/rfc4646
 * Dependency: https://github.com/wooorm/bcp-47
 
 ```
@@ -107,6 +103,23 @@ function format(primary: number, sub: number, sort: number): number;
                  *("-" variant)
                  *("-" extension)
                  ["-" privateuse]
+```
+
+```ts
+export interface BCP47Parts {
+    language: string;
+    extendedLanguageSubtags?: string[];
+    script?: string;
+    region?: string;
+    variants?: string[];
+    extensions?: object[];
+    privateuse?: string[];
+    irregular?: string;
+    regular?: string;
+}
+
+function parse(lcid: number): BCP47Parts;                   // https://github.com/wooorm/bcp-47#bcp47parsetag-options
+function format(parts: BCP47Parts, options: any): number;   // https://github.com/wooorm/bcp-47#bcp47stringifyschema
 ```
 
 # ISO639 (Language)
@@ -173,21 +186,21 @@ function find(text: string): ISO3166Data | null;
 
 ```ts
 enum UNM49Type {
-    Global = 0,     // (example: 001 World)
-    Region = 1,     //  (example: 002 Africa)
-    Subregion = 2,  //  (example: 202 Sub-Saharan Africa)
-    Intermediate = 3, //  region (example: 017 Middle Africa)
-    Country = 4,    //  or area (example: 024 Angola)
+    Global = 0,         // (example: 001 World)
+    Region = 1,         //  (example: 002 Africa)
+    Subregion = 2,      //  (example: 202 Sub-Saharan Africa)
+    Intermediate = 3,   //  region (example: 017 Middle Africa)
+    Country = 4,        //  or area (example: 024 Angola)
 }
 
 interface UNM49Data {
     type: UNM49Type;    // Script name
     code: string;       // num3 ISO 15924 code
-    parent?: string;    // Property Value Alias
+    parent?: string;    // Code of parent region
 }
 
-function getList(): ISO3166Data[];
-function find(text: string): ISO3166Data | null;
+function getList(): UNM49Data[];
+function find(text: string): UNM49Data | null;
 ```
 
 # MIT License

@@ -27,7 +27,7 @@ export interface LCIDParts {
 }
 
 export interface FormatFunction {
-    (lcidParts: LCIDParts): number;
+    (parts: LCIDParts): number;
     (language: number, sort: number): number;
     (primary: number, sub: number, sort: number): number;
 }
