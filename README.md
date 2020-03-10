@@ -59,7 +59,7 @@ function filterByLCID(id: number): ISOLocale[];
 * Ref: https://docs.microsoft.com/en-us/windows/win32/intl/locale-identifiers
 * Ref: https://docs.microsoft.com/en-us/windows/win32/intl/language-identifier-constants-and-strings
 * Dependency: https://github.com/TiagoDanin/Windows-Locale
-* List o codes: https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-lcid/70feba9f-294e-491e-b6eb-56532684c37f?redirectedfrom=MSDN
+* List of codes: https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-lcid/70feba9f-294e-491e-b6eb-56532684c37f?redirectedfrom=MSDN
 
 A language ID is a 16 bit value which is the combination of a
 primary language ID and a secondary language ID.
