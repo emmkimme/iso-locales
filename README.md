@@ -48,12 +48,14 @@ function findByLCID(id: number): ISOLocale | null;
 ```
 
 # RFC4646
-* Ref: https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-lcid/70feba9f-294e-491e-b6eb-56532684c37f?redirectedfrom=MSDN
+* Ref: https://tools.ietf.org/html/rfc4646
 
 
-# LCID (RFC5646)
+# LCID (RFC5646 / RFC4646)
 * Ref: https://docs.microsoft.com/en-us/windows/win32/intl/locale-identifiers
 * Ref: https://docs.microsoft.com/en-us/windows/win32/intl/language-identifier-constants-and-strings
+* Dependency: https://github.com/TiagoDanin/Windows-Locale
+* List o codes: https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-lcid/70feba9f-294e-491e-b6eb-56532684c37f?redirectedfrom=MSDN
 
 A language ID is a 16 bit value which is the combination of a
 primary language ID and a secondary language ID.
@@ -88,10 +90,14 @@ const SUBLANG_DEFAULT = 0x01;
 const SORT_DEFAULT = 0x00;
 
 function parse(lcid: number): LCIDParts;
+
+function format(lcidParts: LCIDParts): number;
+function format(language: number, sort: number): number;
+function format(primary: number, sub: number, sort: number): number;
 ```
 
-# BCP-47 / RFC4646
-* Ref: https://tools.ietf.org/html/bcp47, https://tools.ietf.org/html/rfc4646
+# BCP-47
+* Ref: https://tools.ietf.org/html/bcp47
 * Dependency: https://github.com/wooorm/bcp-47
 
 ```
@@ -106,7 +112,7 @@ function parse(lcid: number): LCIDParts;
 # ISO639 (Language)
 * Ref: https://en.wikipedia.org/wiki/ISO_639
 * Dependency: https://github.com/adlawson/langs.js
-* Lists: https://fr.wikipedia.org/wiki/Liste_des_codes_ISO_639-1, https://www.loc.gov/standards/iso639-2/php/code_list.php
+* Lists of codes: https://fr.wikipedia.org/wiki/Liste_des_codes_ISO_639-1, https://www.loc.gov/standards/iso639-2/php/code_list.php
 
 ```ts
 interface ISO639Data {
@@ -121,7 +127,6 @@ interface ISO639Data {
 
 function getList(): ISO639Data[];
 function find(text: string): ISO639Data | null;
-
 ```
 
 # ISO15924 (Script)
@@ -146,7 +151,7 @@ function find(text: string): ISO15924Data | null;
 # ISO3166 (Region/Country)
 * Wikipedia: https://en.wikipedia.org/wiki/ISO_3166
 * Dependency: https://github.com/nirvana-flame/countries-code
-* Lists: https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
+* List of code: https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
 
 ```ts
 interface ISO3166Data {
@@ -183,7 +188,6 @@ interface UNM49Data {
 
 function getList(): ISO3166Data[];
 function find(text: string): ISO3166Data | null;
-
 ```
 
 # MIT License
