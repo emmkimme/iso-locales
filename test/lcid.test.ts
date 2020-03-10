@@ -28,23 +28,37 @@ describe('lcid', () => {
                 locale = iso_locales.findByLCID(defaultlcid);
             }
         }
-        expect(locale.tag === 'en-GB');
+        expect(locale.tag).to.equal('en-US');
     });
 
     it ('parse lcid', () => {
         let locale = iso_locales.findByTag('fr-FR');
         const lcidParts = iso_locales.lcid.parse(locale.lcid);
-        expect(lcidParts.language === iso_locales.lcid.LANGIDFROMLCID(locale.lcid));
-        expect(lcidParts.primary === iso_locales.lcid.PRIMARYLANGID(locale.lcid));
-        expect(lcidParts.sub === iso_locales.lcid.SUBLANGID(locale.lcid));
-        expect(lcidParts.sort === iso_locales.lcid.SORTIDFROMLCID(locale.lcid));
+        expect(lcidParts.language).to.equal(iso_locales.lcid.LANGIDFROMLCID(locale.lcid));
+        expect(lcidParts.primary).to.equal(iso_locales.lcid.PRIMARYLANGID(locale.lcid));
+        expect(lcidParts.sub).to.equal(iso_locales.lcid.SUBLANGID(locale.lcid));
+        expect(lcidParts.sort).to.equal(iso_locales.lcid.SORTIDFROMLCID(locale.lcid));
     });
 
-    it ('format lcid', () => {
+    it ('format lcid - 3 args', () => {
         let locale = iso_locales.findByTag('fr-FR');
         const lcidParts = iso_locales.lcid.parse(locale.lcid);
         const lcid = iso_locales.lcid.format(lcidParts.primary, lcidParts.sub, lcidParts.sort);
-        expect(lcid === locale.lcid);
+        expect(lcid).to.equal(locale.lcid);
+    });
+
+    it ('format lcid - 2 args', () => {
+        let locale = iso_locales.findByTag('fr-FR');
+        const lcidParts = iso_locales.lcid.parse(locale.lcid);
+        const lcid = iso_locales.lcid.format(lcidParts.language, lcidParts.sort);
+        expect(lcid).to.equal(locale.lcid);
+    });
+
+    it ('format lcid - 1 arg', () => {
+        let locale = iso_locales.findByTag('fr-FR');
+        const lcidParts = iso_locales.lcid.parse(locale.lcid);
+        const lcid = iso_locales.lcid.format(lcidParts);
+        expect(lcid).to.equal(locale.lcid);
     });
 });
 

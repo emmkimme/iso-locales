@@ -40,7 +40,7 @@ export function getLocales(): ISOLocale[] {
                 lcid: windows_locale.id,
                 lcid_parts: lcid.parse(windows_locale.id)
             };
-            const bcp47Data = bcp47.parse(locale.tag, { forgiving: true }) as bcp47.BCP47Data;
+            const bcp47Data = bcp47.parse(locale.tag, { forgiving: true }) as bcp47.BCP47Parts;
             locale.tag_bcp47 = bcp47Data;
 
             // Complete with ISO639 info

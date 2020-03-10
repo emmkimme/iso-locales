@@ -42,7 +42,7 @@
 //                    ; that starts a grandfathered tag
 
 //    alphanum      = (ALPHA / DIGIT)       ; letters and numbers
-export interface BCP47Data {
+export interface BCP47Parts {
     language: string;
     extendedLanguageSubtags?: string[];
     script?: string;

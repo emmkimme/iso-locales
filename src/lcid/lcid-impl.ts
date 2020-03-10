@@ -1,4 +1,4 @@
-import { LCIDParts } from './lcid';
+import { LCIDParts, FormatFunction } from './lcid';
 
 export function parse(lcid: number): LCIDParts {
     const lcidParts: LCIDParts = {
@@ -10,35 +10,37 @@ export function parse(lcid: number): LCIDParts {
     return lcidParts;
 }
 
-export function format(arg1: number | LCIDParts, arg2?: number, arg3?: number): number {
+export const format: FormatFunction = (arg1: number | LCIDParts, arg2?: number, arg3?: number): number => {
     if (typeof arg1 === 'object') {
         const lcidParts = arg1 as LCIDParts;
         return MAKELCID(lcidParts.language, lcidParts.sort);
     }
-    if ((arguments.length === 2) && (typeof arg1 === 'number') && (typeof arg2 === 'number')) {
-        const language = arg1 as number;
-        const sort = arg2 as number;
-        return MAKELCID(language, sort);
-    }
-    if ((arguments.length === 3) && (typeof arg1 === 'number') && (typeof arg2 === 'number') && (typeof arg3 === 'number')) {
-        const primary = arg1 as number;
-        const sub = arg2 as number;
-        const sort = arg3 as number;
-        return MAKELCID(MAKELANGID(primary, sub), sort);
+    if ((typeof arg1 === 'number') && (typeof arg2 === 'number')) {
+        if (typeof arg3 === 'number') {
+            const primary = arg1;
+            const sub = arg2;
+            const sort = arg3;
+            return MAKELCID(MAKELANGID(primary, sub), sort);
+        }
+        else {
+            const language = arg1;
+            const sort = arg2;
+            return MAKELCID(language, sort);
+        }
     }
     return -1;
-}
+};
 
 export function MAKELANGID(primary: number, sub: number): number {
     return ((sub << 10) + PRIMARYLANGID(primary));
 }
 
 export function PRIMARYLANGID(langid: number): number {
-    return (langid & 0b1111111111);
+    return (langid & 0b00001111111111);
 }
 
 export function SUBLANGID(langid: number): number {
-    return ((langid & ~0b1111111111) >> 10);
+    return (langid & 0b11110000000000) >> 10;
 }
 
 export function MAKELCID(langid: number, sortid: number): number {

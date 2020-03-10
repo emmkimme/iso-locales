@@ -1,3 +1,5 @@
+import { isNumeric, padLeft } from '../numeric';
+
 import { ISO15924Data } from './iso-15924';
 
 const trace = false;
@@ -5,7 +7,7 @@ const trace = false;
 let all: ISO15924Data[];
 let all_index: any;
 
-const fields = ['code'];
+const fields = ['code', 'numeric'];
 
 function build() {
     if (all == null) {
@@ -48,7 +50,13 @@ export function getList(): ISO15924Data[] {
 
 export function find(data: string): ISO15924Data | null {
     build();
-    const dataLC = data.toLowerCase();
-    const isoData = all_index[dataLC];
+    let dataC: string;
+    if (isNumeric(data)) {
+        dataC = padLeft('000', data);
+    }
+    else {
+        dataC = data.toLowerCase();
+    }
+    const isoData = all_index[dataC];
     return isoData;
 }

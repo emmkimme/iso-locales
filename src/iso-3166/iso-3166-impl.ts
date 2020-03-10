@@ -1,6 +1,7 @@
-import { ISO3166Data } from './iso-3166';
-
 import * as m49 from '../m49/m49-impl';
+import { isNumeric, padLeft } from '../numeric';
+
+import { ISO3166Data } from './iso-3166';
 
 interface ISO3166DepData {
     country_name_en: string;
@@ -15,7 +16,7 @@ const trace = false;
 let all: ISO3166Data[];
 let all_index: any;
 
-const fields = ['1-alpha2', '1-alpha3'];
+const fields = ['1-alpha2', '1-alpha3', '1-num3'];
 
 function build() {
     if (all == null) {
@@ -27,9 +28,9 @@ function build() {
                 name_en: depData.country_name_en,
                 '1-alpha2': depData.alpha2,
                 '1-alpha3': depData.alpha3,
-                '1-num3': Number(depData['number'])
+                '1-num3': depData['number']
             };
-            const m49data = m49.find(depData['number']);
+            const m49data = m49.find(isoData['1-num3']);
             if (m49data) {
                 isoData['1-num3-m49'] = m49data;
             }
@@ -61,7 +62,13 @@ export function getList(): ISO3166Data[] {
 
 export function find(data: string): ISO3166Data | null {
     build();
-    const dataLC = data.toLowerCase();
-    const isoData = all_index[dataLC];
+    let dataC: string;
+    if (isNumeric(data)) {
+        dataC = padLeft('000', data);
+    }
+    else {
+        dataC = data.toLowerCase();
+    }
+    const isoData = all_index[dataC];
     return isoData;
 }

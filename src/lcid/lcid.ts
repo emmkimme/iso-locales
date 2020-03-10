@@ -26,6 +26,12 @@ export interface LCIDParts {
     sort: number;
 }
 
+export interface FormatFunction {
+    (lcidParts: LCIDParts): number;
+    (language: number, sort: number): number;
+    (primary: number, sub: number, sort: number): number;
+}
+
 export const SUBLANG_NEUTRAL = 0x00;
 export const SUBLANG_DEFAULT = 0x01;
 export const SORT_DEFAULT = 0x00;

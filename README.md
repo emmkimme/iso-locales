@@ -90,7 +90,7 @@ const SORT_DEFAULT = 0x00;
 function parse(lcid: number): LCIDParts;
 ```
 
-# bcp-47 / RFC4646
+# BCP-47 / RFC4646
 * Ref: https://tools.ietf.org/html/bcp47, https://tools.ietf.org/html/rfc4646
 * Dependency: https://github.com/wooorm/bcp-47
 

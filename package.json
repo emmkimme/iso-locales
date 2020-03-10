@@ -1,6 +1,6 @@
 {
   "name": "iso-locales",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Helpers for manipuling ISO/RFC locales.",
   "repository": {
     "type": "git",
