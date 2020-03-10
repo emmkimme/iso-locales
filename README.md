@@ -39,9 +39,9 @@ function getLocales(): ISOLocale[];
 You can search for a locale:
 
 ```ts
-function findByLanguage(text: string): ISOLocale | null;
-function findByLanguageLocal(text: string): ISOLocale | null;
-function findByRegion(text: string): ISOLocale | null;
+function findByLanguage(text: string): ISOLocale[];
+function findByLanguageLocal(text: string): ISOLocale[];
+function findByRegion(text: string): ISOLocale[];
 function findByTag(text: string): ISOLocale | null;
 function findByLCID(id: number): ISOLocale | null;
 ...
