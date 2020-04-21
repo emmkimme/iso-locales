@@ -22,8 +22,12 @@ export function findByScript(text: string): ISOLocale | undefined {
     return find(isoLocale => isoLocale.script === text);
 }
 
-export function findByTag(text: string, ignorecase?: boolean): ISOLocale | undefined {
-    if (ignorecase === false) {
+export interface FindByTagOptions {
+    ignorecase: boolean;
+}
+
+export function findByTag(text: string, options?: FindByTagOptions): ISOLocale | undefined {
+    if (options && (options.ignorecase === false)) {
         return find(isoLocale => isoLocale.tag === text);
     }
     else {

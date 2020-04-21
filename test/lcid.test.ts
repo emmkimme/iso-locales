@@ -19,13 +19,13 @@ describe('lcid', () => {
 
     it ('wrong case tag with ignorecase = true', () => {
         const wrongtag = 'en-us';
-        const locale = iso_locales.findByTag(wrongtag, true);
+        const locale = iso_locales.findByTag(wrongtag, { ignorecase: true });
         expect(locale.tag).to.equal('en-US');
     });
 
     it ('wrong case tag with ignorecase = false', () => {
         const wrongtag = 'en-us';
-        const locale = iso_locales.findByTag(wrongtag, false);
+        const locale = iso_locales.findByTag(wrongtag, { ignorecase: false });
         expect(locale).to.equal(undefined);
     });
 
