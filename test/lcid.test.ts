@@ -11,6 +11,24 @@ describe('lcid', () => {
     afterEach(() => {
     });
 
+    it ('wrong case tag with ignorecase = default', () => {
+        const wrongtag = 'en-us';
+        const locale = iso_locales.findByTag(wrongtag);
+        expect(locale.tag).to.equal('en-US');
+    });
+
+    it ('wrong case tag with ignorecase = true', () => {
+        const wrongtag = 'en-us';
+        const locale = iso_locales.findByTag(wrongtag, true);
+        expect(locale.tag).to.equal('en-US');
+    });
+
+    it ('wrong case tag with ignorecase = false', () => {
+        const wrongtag = 'en-us';
+        const locale = iso_locales.findByTag(wrongtag, false);
+        expect(locale).to.equal(undefined);
+    });
+
     it ('fallback to a correct tag', () => {
         const sillytag = 'en-FR';  // seen on a MAC !!
         let locale = iso_locales.findByTag(sillytag);

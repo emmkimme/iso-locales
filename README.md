@@ -43,7 +43,7 @@ function find(predicate: (value: ISOLocale, index: number, obj: ISOLocale[]) => 
 function findByLanguage(text: string): ISOLocale | undefined;
 function findByLanguageLocal(text: string): ISOLocale | undefined;
 function findByRegion(text: string): ISOLocale | undefined;
-function findByTag(text: string): ISOLocale | undefined;
+function findByTag(text: string, ignorecase?: boolean = true): ISOLocale | undefined;
 function findByLCID(id: number): ISOLocale | undefined;
 
 function filter(callbackfn: (value: ISOLocale, index: number, array: ISOLocale[]) => unknown, thisArg?: any): ISOLocale[];
@@ -126,8 +126,9 @@ export interface BCP47Parts {
     regular?: string;
 }
 
-function parse(lcid: number): BCP47Parts;                   // https://github.com/wooorm/bcp-47#bcp47parsetag-options
-function format(parts: BCP47Parts, options: any): number;   // https://github.com/wooorm/bcp-47#bcp47stringifyschema
+function parse(tag: string): BCP47Parts;                   // https://github.com/wooorm/bcp-47#bcp47parsetag-options
+function format(parts: BCP47Parts, options: any): number;  // https://github.com/wooorm/bcp-47#bcp47stringifyschema
+function normalize(tag: string, options: any): string;     // https://github.com/wooorm/bcp-47-normalize
 ```
 
 # ISO639 (Language)

@@ -22,8 +22,14 @@ export function findByScript(text: string): ISOLocale | undefined {
     return find(isoLocale => isoLocale.script === text);
 }
 
-export function findByTag(text: string): ISOLocale | undefined {
-    return find(isoLocale => isoLocale.tag === text);
+export function findByTag(text: string, ignorecase?: boolean): ISOLocale | undefined {
+    if (ignorecase === false) {
+        return find(isoLocale => isoLocale.tag === text);
+    }
+    else {
+        text = text.toLowerCase();
+        return find(isoLocale => isoLocale.tag.toLowerCase() === text);
+    }
 }
 
 export function findByLCID(lcid: number): ISOLocale | undefined {

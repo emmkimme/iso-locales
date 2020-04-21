@@ -53,3 +53,30 @@ export interface BCP47Parts {
     irregular?: string;
     regular?: string;
 }
+
+export interface WarningCallback {
+    (reason: string, code: number, offset: number): void;
+}
+
+export interface ParseOptions {
+    normalize?: boolean;
+    forgiving?: boolean;
+    warning?: WarningCallback;
+}
+
+export interface Parse {
+    (tag: string, options?: ParseOptions): BCP47Parts;
+}
+
+export interface Format {
+    (tagParts: BCP47Parts): string;
+}
+
+export interface NormalizeOptions {
+    forgiving?: boolean;
+    warning?: WarningCallback;
+}
+
+export interface Normalize {
+    (tag: string, options?: NormalizeOptions): string;
+}

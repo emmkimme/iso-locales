@@ -39,9 +39,9 @@
             "port": 5858,
             "protocol": "inspector",
             "args": [
-                // "${workspaceRoot}/build/**/*.test.js",
+                "${workspaceRoot}/build/**/*.test.js",
                 // "${workspaceRoot}/build/**/lcid.test.js",
-                "${workspaceRoot}/build/**/consistency.test.js",
+                // "${workspaceRoot}/build/**/consistency.test.js",
                 "--full-trace",
                 "--bail",
                 "--recursive",
